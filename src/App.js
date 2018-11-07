@@ -28,7 +28,7 @@ class App extends Component {
     email: this.state.email,
     password: this.state.password
   })
-    
+    console.log(res)
   }
 
   render() {
@@ -36,10 +36,10 @@ class App extends Component {
       <div className="App">
         <h2>Auth App</h2>
         <p>
-          Email: <input onChange={e => this.updateEmail(e)} type="text" />
+          Email: <input onChange={e => this.updateEmail(e)} type="email" />
         </p>
         <p>
-          Password: <input onChange={e => this.updatePassword(e)} type="text" />
+          Password: <input onChange={e => this.updatePassword(e)} type="password" />
         </p>
         <button onClick={() => this.login()}>Login</button>
         <button onClick={() => this.signup()}>Signup</button>
