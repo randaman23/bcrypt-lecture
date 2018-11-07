@@ -19,16 +19,27 @@ class App extends Component {
     this.setState({ password: e.target.value });
   }
 
-  login() {
-    axios.post();
-  }
-  async signup() {
-    if(!this.state.email || !this.state.password) return alert(`Wrong`)
-  let res = await axios.post('/auth/signup', {
-    email: this.state.email,
-    password: this.state.password
-  })
+  async login() {
+    if (!this.state.email || !this.state.password) return alert(`Wrong`);
+    let res = await axios.post(`/auth/login`, {
+      email: this.state.email,
+      password: this.state.password
+    });
     console.log(res)
+  }
+
+  async signup() {
+    if (!this.state.email || !this.state.password) return alert(`Wrong`);
+    let res = await axios.post("/auth/signup", {
+      email: this.state.email,
+      password: this.state.password
+    });
+    console.log(res);
+  }
+  async logout(){
+   let res = await axios.get('/auth/logout')
+   console.log(res)
+    // this.props.history.push("/")
   }
 
   render() {
@@ -39,10 +50,13 @@ class App extends Component {
           Email: <input onChange={e => this.updateEmail(e)} type="email" />
         </p>
         <p>
-          Password: <input onChange={e => this.updatePassword(e)} type="password" />
+          Password:{" "}
+          <input onChange={e => this.updatePassword(e)} type="password" />
         </p>
         <button onClick={() => this.login()}>Login</button>
         <button onClick={() => this.signup()}>Signup</button>
+        <br/>
+        <button onClick={() => this.logout()}>Logout</button>
       </div>
     );
   }

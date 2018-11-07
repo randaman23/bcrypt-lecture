@@ -32,7 +32,32 @@ app.post("/auth/signup", async (req, res) => {
   res.status(200).send(req.session.user);
 });
 
-app.post("/auth/login", (req, res) => {});
+app.post("/auth/login", async (req, res) => {
+  let { email, password } = req.body;
+  const db = req.app.get("db");
+  let foundUser = await db.user_check([email]);
+  if (!foundUser[0]) return res.status(200).send("Email doesn't exist.");
+  let result = bcrypt.compareSync(password, foundUser[0].user_password)
+  if (result) {
+    req.session.user = foundUser[0]
+    res.status(200).send(req.session.user)
+  } else {
+    res.status(401).send('Nice Try, Hooligan')
+  }
+});
+
+app.get('/api/user-data', (req, res) => {
+    if (req.session.user) {
+        res.status(200).send(req.session.user)
+    } else {
+        res.status(401).send('Please Login')
+    }
+})
+
+app.get('/auth/logout', (req, res) => {
+    req.session.destroy()
+    res.status(200).send('Sesh Destroyed, User Logged Out')
+})
 
 app.listen(SERVER_PORT, () => {
   console.log(`Magic is happenin on port ${SERVER_PORT}`);
