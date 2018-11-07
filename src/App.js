@@ -25,7 +25,7 @@ class App extends Component {
       email: this.state.email,
       password: this.state.password
     });
-    console.log(res)
+    console.log(res);
   }
 
   async signup() {
@@ -36,9 +36,9 @@ class App extends Component {
     });
     console.log(res);
   }
-  async logout(){
-   let res = await axios.get('/auth/logout')
-   console.log(res)
+  async logout() {
+    let res = await axios.get("/auth/logout");
+    console.log(res);
     // this.props.history.push("/")
   }
 
@@ -55,7 +55,7 @@ class App extends Component {
         </p>
         <button onClick={() => this.login()}>Login</button>
         <button onClick={() => this.signup()}>Signup</button>
-        <br/>
+        <br />
         <button onClick={() => this.logout()}>Logout</button>
       </div>
     );
